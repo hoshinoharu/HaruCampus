@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.haru.sora.harucampus.components.ECardLoginDialog;
+import com.haru.tools.ViewTool;
 import com.haru.widget.CircleActionLayout;
 
 public class HomPage extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +37,7 @@ public class HomPage extends AppCompatActivity implements View.OnClickListener {
                 if(circleActionLayout == null){
                     View centerView = HomPage.this.findViewById(R.id.centerView) ;
                     circleActionLayout = (CircleActionLayout) HomPage.this.findViewById(R.id.container);
-                    circleActionLayout.setRange(350);
+                    circleActionLayout.setRange(ViewTool.dip2px(HomPage.this, 120));
                     circleActionLayout.setCenterView(centerView);
                     circleActionLayout.addViewAsAction(lnrLot_ecardLogin);
                     circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test1));
@@ -45,7 +46,6 @@ public class HomPage extends AppCompatActivity implements View.OnClickListener {
                     circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test4));
                     circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test5));
                     circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test6));
-
                     centerView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

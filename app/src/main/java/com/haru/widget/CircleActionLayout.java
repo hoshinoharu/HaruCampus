@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.haru.sora.harucampus.R;
+import com.haru.tools.HLog;
 import com.haru.tools.MathTool;
+import com.haru.tools.Res;
 import com.haru.tools.ViewTool;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class CircleActionLayout extends FrameLayout {
     private View centerView;
 
     //其他视图分布的范围
-    private float range = 200;
+    private float range = 0;
 
     //所有actions视图
     private List<CircleAction> actions = new ArrayList<>();
@@ -74,8 +76,7 @@ public class CircleActionLayout extends FrameLayout {
     private void init() {
         //初始隐藏
         this.setVisibility(INVISIBLE);
-
-
+        this.range = ViewTool.dip2px(this.getContext(), 60) ;
 
         this.hGestureListener = new HGestureListener();
         this.gestureDetector = new GestureDetector(this.getContext(), this.hGestureListener);
@@ -225,6 +226,7 @@ public class CircleActionLayout extends FrameLayout {
     //增加一个视图，从视图转为action对象
     public void addViewAsAction(View view) {
         if (view != null) {
+            HLog.e("TAG", this.range);
             this.addAction(new CircleAction(view, this.centerView, this.range));
         }
     }

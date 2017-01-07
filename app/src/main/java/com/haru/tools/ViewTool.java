@@ -1,5 +1,6 @@
 package com.haru.tools;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,7 +34,10 @@ public class ViewTool {
         }
         return false ;
     }
-
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
 
 }

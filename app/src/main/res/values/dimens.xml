@@ -11,4 +11,7 @@
     <dimen name="ecard_login_textSize">20sp</dimen>
     <dimen name="ecard_edtxt_size">50dp</dimen>
     <dimen name="ecard_layout_height">60dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
 </resources>

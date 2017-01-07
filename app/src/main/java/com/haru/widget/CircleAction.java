@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import com.haru.tools.MathTool;
+import com.haru.tools.Res;
 import com.haru.tools.ViewTool;
 
 /**
@@ -21,7 +22,7 @@ public class CircleAction {
 
     private View action;
 
-    private float range = 100;
+    private float range ;
 
     private float degree;
 
