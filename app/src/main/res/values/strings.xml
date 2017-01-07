@@ -11,7 +11,7 @@
     <string name="user">用户</string>
     <string name="trade">商户</string>
     <string name="admin">管理员</string>
-    <string name="server_fail">服务器响应成功</string>
+    <string name="server_fail">服务器响应失败</string>
     <string name="server_success">服务器响应成功</string>
     <string name="verifyCode_url">http://ecard.avceit.cn/checkCode.action?t=</string>
     <string name="ecard_home_url">http://ecard.avceit.cn/systemInit.action</string>

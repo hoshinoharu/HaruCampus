@@ -1,7 +1,10 @@
 package com.haru.sora.harucampus.components;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,14 +21,20 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.haru.sora.harucampus.R;
 import com.haru.tools.GlideTool;
+import com.haru.tools.HLog;
 import com.haru.tools.MathTool;
 import com.haru.tools.OKHttpTool;
 import com.haru.tools.Res;
@@ -79,6 +88,18 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
 
     private View contentView ;
 
+    private RadioButton rdoBtn_user ;
+
+    private RadioButton rdoBtn_trade ;
+
+    private RadioButton rdoBtn_admin ;
+
+    private RadioButton curCheckedBtn ;
+
+
+
+
+
 
     public ECardLoginDialog(Activity ownerActivy){
         super(ownerActivy, R.style.NoBackGroundDialog);
@@ -116,6 +137,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         this.edTxt_userName.setOnFocusChangeListener(this);
         this.edText_verifyCode.setOnFocusChangeListener(this);
 
+
         this.edText_verifyCode.addTextChangedListener(new HTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
@@ -141,28 +163,40 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         this.rdoGrp_loginMoedl.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                curCheckedBtn = (RadioButton) radioGroup.getChildAt(i);
                 rdoGrp_loginMoedl.setBackgroundColor(Res.color(ownerActivy, android.R.color.transparent));
                 mrPhBtn_login.morphToSquare();
             }
         });
 
+         this.rdoBtn_user = (RadioButton) this.mainView.findViewById(R.id.rdoBtn_user);
+        this.rdoBtn_admin = (RadioButton) this.mainView.findViewById(R.id.rdoBtn_admin);
+        this.rdoBtn_trade = (RadioButton) this.mainView.findViewById(R.id.rdoBtn_trade);
+        this.rdoBtn_user.setChecked(true);
+        this.curCheckedBtn = rdoBtn_user ;
+
         this.setOnShowListener(this);
+
     }
 
     @Override
     public void show() {
+
         super.show();
         if(loginAnimeHandler == null){
             loginAnimeHandler = new Handler(Looper.getMainLooper()) ;
         }
-        this.queryVerifyCode();
+        if(this.cookies != null){
+            this.queryVerifyCode();
+        }
+
     }
 
     //请求验证码
     public void queryVerifyCode(){
         mrPhBtn_login.morphToSquare();
         if(this.cookies == null){
-            Toast.makeText(getContext(), R.string.server_fail, Toast.LENGTH_SHORT).show();
+            Snackbar.make(this.mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
         }else {
             this.ownerActivy.runOnUiThread(new Runnable() {
                 @Override
@@ -178,15 +212,25 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         OKHttpTool.sendOkHttpRequest(this.getContext().getString(R.string.ecard_home_url), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Looper.prepare();
                 Snackbar.make(mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+                HLog.ex("TAG", e);
+                loginAnimeHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mrPhBtn_login.morphToFailure();
+                    }
+                }, 100) ;
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 cookies = response.header("Set-Cookie", null) ;
-                Looper.prepare();
-                queryVerifyCode();
+                loginAnimeHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        queryVerifyCode();
+                    }
+                }) ;
             }
         });
     }
@@ -200,21 +244,25 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         if(!isCheckSuccess){
             startTimes = System.currentTimeMillis() ;
             this.mrPhBtn_login.simulateProgress();
-            OKHttpTool.sendOkHttpRequest(ownerActivy.getString(R.string.check_verify_code_url) + this.verifyCode, Headers.of("Cookie", cookies),  new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
+            if(cookies == null){
+                this.queryCookies();
+            }else{
+                OKHttpTool.sendOkHttpRequest(ownerActivy.getString(R.string.check_verify_code_url) + this.verifyCode, Headers.of("Cookie", cookies),  new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-                }
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    boolean flag = Boolean.parseBoolean(response.body().string()) ;
+                    }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        boolean flag = Boolean.parseBoolean(response.body().string()) ;
                         if(flag){
                             verifyCodeSuccess();
                         }else{
                             verifyCodeFail();
                         }
-                }
-            });
+                    }
+                });
+            }
         }
     }
 
@@ -242,7 +290,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         OKHttpTool.sendOkHttpRequest(loginUrl+"&username="+userName+"&password="+password+"&checkCode="+verifyCode, Headers.of("Cookie", cookies), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Snackbar.make(mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
@@ -282,12 +330,26 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
 
     public void checkUserFail(){
         Snackbar.make(this.mainView, R.string.user_error_info, Snackbar.LENGTH_LONG).show();
-        mrPhBtn_login.morphToFailure();
+
+        loginAnimeHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                edTxt_password.setBackgroundResource(R.drawable.frame_error);
+                edTxt_userName.setBackgroundResource(R.drawable.frame_error);
+                mrPhBtn_login.morphToFailure();
+            }
+        }) ;
     }
 
     public void loginModelError(){
         Snackbar.make(this.mainView, R.string.login_model_error, Snackbar.LENGTH_LONG).show();
-        mrPhBtn_login.morphToFailure();
+        this.loginAnimeHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mrPhBtn_login.morphToFailure();
+                rdoGrp_loginMoedl.setBackgroundResource(R.drawable.frame_error);
+            }
+        }, 600);
     }
 
     public String getLoginUrl(){
@@ -314,13 +376,13 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
     }
 
     public void verifyCodeFail(){
-        this.ownerActivy.runOnUiThread(new Runnable() {
+        loginAnimeHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 edText_verifyCode.setBackgroundResource(R.drawable.frame_error);
                 mrPhBtn_login.morphToFailure();
             }
-        });
+        }, 100) ;
     }
 
     @Override
@@ -336,10 +398,24 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             this.rootView = this.mainView.getRootView() ;
             this.rootView.setBackgroundResource(android.R.color.transparent);
         }
+        this.curCheckedBtn.setChecked(true);
         //初始化动画
         if(this.apperanceAnimator == null) {
-            this.apperanceAnimator = ObjectAnimator.ofFloat(this.contentView, "rotationX", 90, 0);
-            this.apperanceAnimator.setDuration(500);
+            AnimatorSet animatorSet = new AnimatorSet() ;
+            float y = contentView.getY();
+            float height = contentView.getHeight() ;
+            ObjectAnimator contentAnime = ObjectAnimator.ofFloat(contentView, "translationY",- height,0) ;
+            ObjectAnimator contentRotateAnime = ObjectAnimator.ofFloat(contentView, "rotation", 30, 0) ;
+            animatorSet.play(contentRotateAnime).with(contentAnime) ;
+            animatorSet.setInterpolator(new OvershootInterpolator());
+            animatorSet.setDuration(750) ;
+            contentAnime.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    contentView.setVisibility(View.VISIBLE);
+                }
+            });
+            apperanceAnimator = animatorSet ;
         }
         this.apperanceAnimator.start();
     }

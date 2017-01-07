@@ -31,7 +31,9 @@ public class ViewTool {
         if(input != null && ! "".equals(input)){
             return true ;
         }
-        return true ;
+        return false ;
     }
+
+
 
 }

@@ -5,50 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.haru.sora.harucampus.HomPage"
-    >
+    tools:context="com.haru.sora.harucampus.HomPage">
+
     <include layout="@layout/content_hom_page" />
+
     <com.haru.widget.CircleActionLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:id="@+id/container"
-    >
+        android:layout_gravity="center">
+
         <View
             android:id="@+id/coverView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#000"
-            />
+            android:background="#000" />
+
+        <TextView
+            android:id="@+id/test1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test1" />
+
+        <TextView
+            android:id="@+id/test2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test2" />
+
+        <TextView
+            android:id="@+id/test3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test3" />
+
+        <TextView
+            android:id="@+id/test4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test4" />
+
+        <TextView
+            android:id="@+id/test5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test5" />
+
+        <TextView
+            android:id="@+id/test6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test6" />
+
         <LinearLayout
             android:id="@+id/lnrLot_ecardLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
-            >
+            android:orientation="vertical">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/circle_action_edge"
                 android:layout_height="@dimen/circle_action_edge"
-                android:src="@drawable/e_card"
-                />
+                android:src="@drawable/e_card" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/e_card"
                 android:textColor="#fff"
-                android:textSize="@dimen/e_card_action_text_size"
-                android:gravity="center_horizontal"
-                />
+                android:textSize="@dimen/e_card_action_text_size" />
         </LinearLayout>
-      <de.hdodenhof.circleimageview.CircleImageView
-          android:id="@+id/centerView"
-          android:layout_width="@dimen/circle_center_action_edge"
-          android:layout_height="@dimen/circle_center_action_edge"
-          android:src="@drawable/dd_logo_x"
-          android:layout_gravity="center"
-          />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/centerView"
+            android:layout_width="@dimen/circle_center_action_edge"
+            android:layout_height="@dimen/circle_center_action_edge"
+            android:layout_gravity="center"
+            android:src="@drawable/dd_logo_x" />
     </com.haru.widget.CircleActionLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

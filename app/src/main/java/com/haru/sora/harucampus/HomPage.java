@@ -39,6 +39,12 @@ public class HomPage extends AppCompatActivity implements View.OnClickListener {
                     circleActionLayout.setRange(350);
                     circleActionLayout.setCenterView(centerView);
                     circleActionLayout.addViewAsAction(lnrLot_ecardLogin);
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test1));
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test2));
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test3));
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test4));
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test5));
+                    circleActionLayout.addViewAsAction(HomPage.this.findViewById(R.id.test6));
 
                     centerView.setOnClickListener(new View.OnClickListener() {
                         @Override

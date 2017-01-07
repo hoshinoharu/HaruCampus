@@ -10,6 +10,9 @@ import okhttp3.Request;
  */
 
 public class OKHttpTool {
+
+    public static Headers emptyHeaders = new Headers.Builder().build() ;
+
     public static void sendOkHttpRequest(String url, Headers headers, Callback callback){
         OkHttpClient client = new OkHttpClient() ;
         Request.Builder builder = new Request.Builder().url(url) ;
@@ -19,6 +22,6 @@ public class OKHttpTool {
         client.newCall(builder.build()).enqueue(callback);
     }
     public static void sendOkHttpRequest(String url, Callback callback){
-        sendOkHttpRequest(url, null, callback);
+        sendOkHttpRequest(url, emptyHeaders, callback);
     }
 }
