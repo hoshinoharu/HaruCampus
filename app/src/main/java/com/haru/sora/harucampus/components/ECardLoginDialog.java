@@ -168,6 +168,9 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
                 mrPhBtn_login.morphToSquare();
             }
         });
+        if(loginAnimeHandler == null){
+            loginAnimeHandler = new Handler(Looper.getMainLooper()) ;
+        }
 
          this.rdoBtn_user = (RadioButton) this.mainView.findViewById(R.id.rdoBtn_user);
         this.rdoBtn_admin = (RadioButton) this.mainView.findViewById(R.id.rdoBtn_admin);
@@ -181,11 +184,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
 
     @Override
     public void show() {
-
         super.show();
-        if(loginAnimeHandler == null){
-            loginAnimeHandler = new Handler(Looper.getMainLooper()) ;
-        }
         if(this.cookies != null){
             this.queryVerifyCode();
         }

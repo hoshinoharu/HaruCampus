@@ -3,9 +3,11 @@ package com.haru.widget;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.haru.tools.HLog;
 import com.haru.tools.MathTool;
 import com.haru.tools.Res;
 import com.haru.tools.ViewTool;
@@ -28,10 +30,11 @@ public class CircleAction {
 
     private Animator autoAnimator;
 
-    public CircleAction(View action, View centerView, float range) {
+    public CircleAction(View action, View centerView, float range, ActionTouchListen actionTouchListen) {
         this.action = action;
         this.centerView = centerView;
         this.range = range;
+        this.action.setOnTouchListener(actionTouchListen);
     }
 
     public float getRange() {
@@ -126,6 +129,8 @@ public class CircleAction {
             }
         }
     }
+
+
 
 
 }

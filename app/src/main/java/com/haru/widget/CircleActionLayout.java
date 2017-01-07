@@ -46,6 +46,8 @@ public class CircleActionLayout extends FrameLayout {
 
     private HGestureListener hGestureListener;
 
+    private ActionTouchListen actionTouchListen ;
+
     public CircleActionLayout(Context context) {
         super(context);
         this.init();
@@ -72,6 +74,14 @@ public class CircleActionLayout extends FrameLayout {
 
     private double startDegree;
 
+    private OnTouchListener onTouchListener ;
+
+    private boolean canShowInterface = false ;
+
+    private boolean canToShow = true ;
+
+    private int moveTimes = 0 ;
+
     //所有构造器都会调用初始化方法
     private void init() {
         //初始隐藏
@@ -81,9 +91,10 @@ public class CircleActionLayout extends FrameLayout {
         this.hGestureListener = new HGestureListener();
         this.gestureDetector = new GestureDetector(this.getContext(), this.hGestureListener);
 
-        this.setOnTouchListener(new OnTouchListener() {
+        this.onTouchListener = new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                HLog.e("TAG", motionEvent);
                 gestureDetector.onTouchEvent(motionEvent);
                 float[] originLoc = ViewTool.getViewCenter(centerView);
                 switch (motionEvent.getAction()) {
@@ -97,17 +108,27 @@ public class CircleActionLayout extends FrameLayout {
                         for (CircleAction action : actions) {
                             action.stopAutoAnimator();
                         }
+                        canShowInterface = false ;
+                        canToShow = true ;
+                        moveTimes = 0 ;
                         return true;
                     case MotionEvent.ACTION_MOVE:
+                        if(Math.abs(motionEvent.getRawX() - startLoc[0]) > 5 || Math.abs(motionEvent.getRawY() - startLoc[1]) > 5){
+                            canToShow = false ;
+                        }
+                        HLog.e("TAG", canShowInterface);
                         double curDegree = MathTool.getAngle(originLoc[0], originLoc[1], motionEvent.getRawX(), motionEvent.getRawY());
+                        HLog.e("TAG","degree",  curDegree);
                         for (CircleAction action : actions) {
                             action.roateByCenter((float) (startDegree - curDegree));
                         }
                         startDegree = curDegree;
+                        moveTimes ++ ;
                         return true;
                     case MotionEvent.ACTION_UP:
-//                    double curUpDegree = MathTool.getAngle(originLoc[0], originLoc[1], motionEvent.getRawX(), motionEvent.getRawY()) ;
-//                    HLog.e("TAG", "upDegree", curUpDegree, "preDegree", startDegree) ;
+                        if(canToShow){
+                            canShowInterface = true ;
+                        }
                         float mx = motionEvent.getRawX() ;
                         float my = motionEvent.getRawY() ;
                         float v ;
@@ -124,6 +145,7 @@ public class CircleActionLayout extends FrameLayout {
                                 v = -v ;
                             }
                         }
+                        HLog.e("TAG", 'V', v);
                         if (v != 0) {
                             for (CircleAction action : actions) {
                                 action.roateByCenterWithStartVel(v);
@@ -132,10 +154,32 @@ public class CircleActionLayout extends FrameLayout {
 
                         return true;
                 }
+                return false;
+            }
+        } ;
+        this.setOnTouchListener(this.onTouchListener);
+
+        this.actionTouchListen = new ActionTouchListen() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                event.setLocation(event.getRawX(), event.getRawY());
+                onTouchListener.onTouch(v, event) ;
+                if(canShowInterface){
+                    v.callOnClick() ;
+                }
                 return true;
             }
-        });
+        } ;
+    }
 
+
+    private boolean canInterceptTouch = true ;
+    private boolean isClick = false ;
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev) ;
     }
 
     private View converView ;
@@ -227,7 +271,7 @@ public class CircleActionLayout extends FrameLayout {
     public void addViewAsAction(View view) {
         if (view != null) {
             HLog.e("TAG", this.range);
-            this.addAction(new CircleAction(view, this.centerView, this.range));
+            this.addAction(new CircleAction(view, this.centerView, this.range, this.actionTouchListen));
         }
     }
 
@@ -278,5 +322,13 @@ public class CircleActionLayout extends FrameLayout {
 
     public void setRange(float range) {
         this.range = range;
+    }
+
+    public boolean isCanShowInterface() {
+        return canShowInterface;
+    }
+
+    public void setCanShowInterface(boolean canShowInterface) {
+        this.canShowInterface = canShowInterface;
     }
 }

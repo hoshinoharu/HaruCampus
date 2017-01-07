@@ -100,7 +100,9 @@ public class HomPage extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == this.lnrLot_ecardLogin){
-            new ECardLoginDialog(this).show();
+            if(circleActionLayout.isCanShowInterface()){
+                new ECardLoginDialog(this).show();
+            }
         }
     }
 }
