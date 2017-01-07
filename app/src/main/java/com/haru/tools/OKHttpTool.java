@@ -1,6 +1,7 @@
 package com.haru.tools;
 
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -9,9 +10,15 @@ import okhttp3.Request;
  */
 
 public class OKHttpTool {
-    public static void sendOkHttpRequest(String url, Callback callback){
+    public static void sendOkHttpRequest(String url, Headers headers, Callback callback){
         OkHttpClient client = new OkHttpClient() ;
-        Request request = new Request.Builder().url(url).build() ;
-        client.newCall(request).enqueue(callback);
+        Request.Builder builder = new Request.Builder().url(url) ;
+        if(headers != null){
+            builder.headers(headers) ;
+        }
+        client.newCall(builder.build()).enqueue(callback);
+    }
+    public static void sendOkHttpRequest(String url, Callback callback){
+        sendOkHttpRequest(url, null, callback);
     }
 }

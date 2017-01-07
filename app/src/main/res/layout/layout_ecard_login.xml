@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:src="@drawable/entrance"
+        android:scaleType="fitXY"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:layout_marginTop="0dp"
+        android:background="#9fff"
+        android:id="@+id/contentView"
+        >
         <RadioGroup
             android:id="@+id/rdoGrp_loginModel"
             android:layout_width="match_parent"
@@ -11,6 +28,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_margin="10dp"
+            android:background="#0000"
             >
             <RadioButton
                 android:theme="@style/EdTxtThem"
@@ -40,129 +58,132 @@
                 android:layout_marginRight="5dp"
                 />
         </RadioGroup>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        >
-
-        <ImageView
-            android:layout_width="@dimen/ecard_edtxt_size"
-            android:layout_height="@dimen/ecard_edtxt_size"
-            android:src="@drawable/user"
-            android:scaleType="fitCenter"
-            />
-
-        <EditText
-            android:id="@+id/edTxt_userName"
-            android:theme="@style/EdTxtThem"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ecard_edtxt_size"
-            android:textSize="@dimen/e_card_text_size"
-            android:hint="@string/input_username"
-            android:gravity="left|center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
             android:background="#0000"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
-    </LinearLayout>
+            >
+
+            <ImageView
+                android:layout_width="@dimen/ecard_edtxt_size"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:src="@drawable/user"
+                android:scaleType="fitCenter"
+                />
+
+            <EditText
+                android:id="@+id/edTxt_userName"
+                android:theme="@style/EdTxtThem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:textSize="@dimen/e_card_text_size"
+                android:hint="@string/input_username"
+                android:gravity="left|center_vertical"
+                android:background="#0000"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                />
+        </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#999"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:layout_width="@dimen/ecard_edtxt_size"
-            android:layout_height="@dimen/ecard_edtxt_size"
-            android:src="@drawable/lock"
-            android:scaleType="fitCenter"
-            />
-        <EditText
-            android:id="@+id/edText_password"
-            android:theme="@style/EdTxtThem"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ecard_edtxt_size"
-            android:textSize="@dimen/e_card_text_size"
-            android:hint="@string/input_password"
-            android:gravity="left|center_vertical"
-            android:background="#0000"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#999"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        >
-        <ImageButton
-            android:id="@+id/imgBtn_verifyCode"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:layout_margin="5dp"
-            android:src="@drawable/error"
-            android:background="#0000"
-            />
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:background="#999"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             />
-        <EditText
-            android:id="@+id/edText_verifyCode"
-            android:theme="@style/EdTxtThem"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/ecard_edtxt_size"
-            android:textSize="@dimen/e_card_text_size"
-            android:layout_weight="2"
-            android:hint="@string/input_check_code"
-            android:background="#0000"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="@dimen/ecard_edtxt_size"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:src="@drawable/lock"
+                android:scaleType="fitCenter"
+                />
+            <EditText
+                android:id="@+id/edTxt_password"
+                android:theme="@style/EdTxtThem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:textSize="@dimen/e_card_text_size"
+                android:hint="@string/input_password"
+                android:gravity="left|center_vertical"
+                android:background="#0000"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:inputType="textPassword"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            >
+            <ImageButton
+                android:id="@+id/imgBtn_verifyCode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="5dp"
+                android:src="@drawable/error"
+                android:background="#0000"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#999"
+                />
+            <EditText
+                android:id="@+id/edText_verifyCode"
+                android:theme="@style/EdTxtThem"
+                android:layout_width="175dp"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:textSize="@dimen/e_card_text_size"
+                android:hint="@string/input_check_code"
+                android:background="#0000"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ecard_layout_height"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            >
+            <com.haru.sora.harucampus.components.HIndeterminateProgressButton
+                android:id="@+id/mrPhBtn_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ecard_edtxt_size"
+                android:text="@string/login"
+                android:textSize="@dimen/e_card_text_size"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                />
+        </LinearLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#999"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/ecard_layout_height"
-       android:gravity="center"
-       android:layout_margin="10dp"
-       >
-       <com.haru.sora.harucampus.components.HIndeterminateProgressButton
-           android:id="@+id/mrPhBtn_login"
-           android:layout_width="match_parent"
-           android:layout_height="@dimen/ecard_edtxt_size"
-           android:text="@string/login"
-           android:textSize="@dimen/e_card_text_size"
-           android:textStyle="bold"
-           android:textColor="#fff"
-           />
-   </LinearLayout>
-</LinearLayout>
+</FrameLayout>

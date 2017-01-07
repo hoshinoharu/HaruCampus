@@ -1,5 +1,7 @@
 package com.haru.tools;
 
+import java.util.Random;
+
 /**
  * Created by 星野悠 on 2017/1/4.
  */
@@ -59,5 +61,13 @@ public class MathTool {
             return  a ;
         }
         return b ;
+    }
+
+    private static Random random ;
+    public static double randomDouble(){
+        if(random == null){
+            random = new Random() ;
+        }
+        return random.nextDouble() ;
     }
 }

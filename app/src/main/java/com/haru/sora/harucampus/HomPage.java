@@ -66,6 +66,8 @@ public class HomPage extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         });
+
+
     }
 
     private void init(){

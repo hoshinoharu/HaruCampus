@@ -1,8 +1,6 @@
 package com.haru.sora.harucampus.components;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,6 +14,9 @@ import com.haru.tools.Res;
  * Created by 星野悠 on 2017/1/6.
  */
 
+ enum State{
+    SUCCESS, FAIL,SQUARE,SIMUPROGRESS
+        }
 public class HIndeterminateProgressButton extends IndeterminateProgressButton implements View.OnClickListener {
 
     private int duration = 500;
@@ -26,7 +27,7 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
     public void setDuration(int duration) {
         this.duration = duration;
     }
-
+    private State state ;
 
 
     public HIndeterminateProgressButton(Context context) {
@@ -55,6 +56,11 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
 
     private MorphingButton.Params squareParams ;
     public void morphToSquare() {
+        if(this.state == State.SQUARE){
+            return ;
+        }
+        this.canTouch = true ;
+        this.state = State.SQUARE ;
         if(squareParams == null) {
             this.squareParams = MorphingButton.Params.create()
                     .duration(duration)
@@ -70,9 +76,8 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
                         }
                     });
         }
-
+        this.unblockTouch();
         this.morph(squareParams);
-
     }
     private int progressColor1 = Res.color(this.getContext(), R.color.holo_blue_bright);
     private int progressColor2 = Res.color(this.getContext(), R.color.holo_green_light);
@@ -84,23 +89,25 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
     private int height = Res.dimen(this.getContext(), R.dimen.mb_height_8);
     private int progressDuration = Res.integer(this.getContext(), R.integer.mb_animation);
 
-    private void simulateProgress() {
+    public void simulateProgress() {
+        if(this.state == State.SIMUPROGRESS){
+            return ;
+        }
+        this.state = State.SIMUPROGRESS ;
+        this.canTouch = false ;
         this.canSimulateProgress = false ;
         this.blockTouch();
-        Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                morphToSuccess();
-            }
-        };
-        handler.sendMessageDelayed(Message.obtain(), 4000) ;
-
         this.morphToProgress(color, progressCornerRadius, width, height, progressDuration, progressColor1, progressColor2,
                 progressColor3, progressColor4);
     }
 
     private MorphingButton.Params successParams ;
-    private void morphToSuccess() {
+    public void morphToSuccess() {
+        if(this.state == State.SUCCESS){
+            return ;
+        }
+        this.state = State.SUCCESS ;
+        this.canTouch = false ;
         if(successParams == null) {
             successParams = MorphingButton.Params.create()
                     .duration(Res.integer(this.getContext(), R.integer.mb_animation))
@@ -117,11 +124,17 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
                 }
             }) ;
         }
+        this.blockTouch();
         this.morph(successParams);
     }
 
     private MorphingButton.Params failureParams ;
-    private void morphToFailure() {
+    public void morphToFailure() {
+        if(this.state == State.FAIL){
+            return ;
+        }
+        this.state = State.FAIL ;
+        this.canTouch = false ;
         if(failureParams == null) {
             failureParams = MorphingButton.Params.create()
                     .duration(duration)
@@ -138,15 +151,27 @@ public class HIndeterminateProgressButton extends IndeterminateProgressButton im
                 }
             }) ;
         }
+        this.blockTouch();
         this.morph(failureParams);
     }
     private boolean canSimulateProgress = true ;
+    private boolean canTouch = true ;
     @Override
     public void onClick(View view) {
-        if(canSimulateProgress){
-            this.simulateProgress();
-        }else{
-            this.morphToSquare();
+        if(canTouch){
+            if(canSimulateProgress){
+                this.simulateProgress();
+            }else{
+                this.morphToSquare();
+            }
         }
+    }
+
+    public boolean isCanTouch() {
+        return canTouch;
+    }
+
+    public void setCanTouch(boolean canTouch) {
+        this.canTouch = canTouch;
     }
 }
