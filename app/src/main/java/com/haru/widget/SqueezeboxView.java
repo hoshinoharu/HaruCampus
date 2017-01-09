@@ -27,10 +27,21 @@ enum State{
  */
 public class SqueezeboxView extends FrameLayout implements View.OnClickListener {
 
+    public interface OnContentItemClickListener{
+        void onContentItemClick(View view);
+    }
     private View title ;
     private View content ;
 
     private SqueezeboxListener squeezeboxListener ;
+
+    private OnContentItemClickListener onContentItemClickListener ;
+
+    void setItemOnClickListener(SqueezeboxGroup.ItemOnClickListener itemOnClickListener) {
+        this.itemOnClickListener = itemOnClickListener;
+    }
+
+    private SqueezeboxGroup.ItemOnClickListener itemOnClickListener ;
 
     //上一个节点
     private SqueezeboxView nextView ;
@@ -94,7 +105,21 @@ public class SqueezeboxView extends FrameLayout implements View.OnClickListener 
             this.layoutParams = this.getLayoutParams();
             this.originContentHeight = this.content.getHeight() ;
             this.content.setY(this.title.getY()+this.title.getHeight());
+            setClickListener(this.content);
             this.show();
+        }
+    }
+
+
+    //给所有子视图设置监听
+    private void setClickListener(View view){
+        if(view instanceof  ViewGroup){
+            ViewGroup viewGroup = (ViewGroup) view;
+            for(int index = 0; index < viewGroup.getChildCount(); index ++){
+                setClickListener(viewGroup.getChildAt(index));
+            }
+        }else{
+            view.setOnClickListener(this);
         }
     }
 
@@ -177,6 +202,17 @@ public class SqueezeboxView extends FrameLayout implements View.OnClickListener 
                 this.showContent();
             }else{
                 this.hideContent();
+            }
+
+            if(this.itemOnClickListener != null){
+                this.itemOnClickListener.onItemTitleClick(view, showContent);
+            }
+        }else{
+            if(this.itemOnClickListener != null){
+                this.itemOnClickListener.onItemContentClick(view);
+            }
+            if(this.onContentItemClickListener != null){
+                this.onContentItemClickListener.onContentItemClick(view);
             }
         }
     }

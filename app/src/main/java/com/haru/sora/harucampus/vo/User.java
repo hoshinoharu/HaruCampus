@@ -1,5 +1,7 @@
 package com.haru.sora.harucampus.vo;
 
+import java.util.List;
+
 /**
  * Created by 星野悠 on 2017/1/9.
  */
@@ -15,7 +17,7 @@ public class User {
 
     private String cookies ;
 
-
+    private List<UserInfo> userInfos ;
 
     User(){
 
@@ -59,5 +61,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<UserInfo> getUserInfos() {
+        return userInfos;
+    }
+
+    public void setUserInfos(List<UserInfo> userInfos) {
+        this.userInfos = userInfos;
     }
 }

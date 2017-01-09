@@ -19,6 +19,6 @@
     <dimen name="layout_height_ecard_option_height">40dp</dimen>
     <dimen name="option_title_icon_size">40dp</dimen>
 
-    <dimen name="testSize_optionTitleInfo">20sp</dimen>
-    <dimen name="testSize_optionContent">15sp</dimen>
+    <dimen name="textSize_optionTitleInfo">20sp</dimen>
+    <dimen name="textSize_optionContent">15sp</dimen>
 </resources>

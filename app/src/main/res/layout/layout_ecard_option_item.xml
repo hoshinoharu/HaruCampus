@@ -19,7 +19,7 @@
             android:id="@+id/txtVw_optionTitleInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/testSize_optionTitleInfo"
+            android:textSize="@dimen/textSize_optionTitleInfo"
             />
     </LinearLayout>
     <LinearLayout

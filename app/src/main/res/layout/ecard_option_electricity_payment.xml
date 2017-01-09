@@ -8,27 +8,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/testSize_optionTitleInfo"
+        android:layout_marginLeft="@dimen/textSize_optionTitleInfo"
         android:orientation="vertical"
         >
-        <TextView
+        <com.haru.widget.StrokeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/testSize_optionContent"
+            android:textSize="@dimen/textSize_optionContent"
             android:text="@string/electricity_pay"
             android:layout_margin="5dp"
             />
-        <TextView
+        <com.haru.widget.StrokeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/testSize_optionContent"
+            android:textSize="@dimen/textSize_optionContent"
             android:text="@string/electricity_query"
             android:layout_margin="5dp"
             />
-        <TextView
+        <com.haru.widget.StrokeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/testSize_optionContent"
+            android:textSize="@dimen/textSize_optionContent"
             android:text="@string/electricity_payment_details"
             android:layout_margin="5dp"
             />
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|left"
-        android:textSize="@dimen/testSize_optionTitleInfo"
+        android:textSize="@dimen/textSize_optionTitleInfo"
         android:text="@string/electricity_payment"
         />
 </com.haru.widget.SqueezeboxView>

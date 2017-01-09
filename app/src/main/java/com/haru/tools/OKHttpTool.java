@@ -1,5 +1,8 @@
 package com.haru.tools;
 
+import java.io.InputStream;
+import java.util.Scanner;
+
 import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -23,5 +26,15 @@ public class OKHttpTool {
     }
     public static void sendOkHttpRequest(String url, Callback callback){
         sendOkHttpRequest(url, emptyHeaders, callback);
+    }
+
+    public static String getHtml(InputStream inputStream){
+        Scanner scanner = new Scanner(inputStream) ;
+        StringBuffer buffer = new StringBuffer();
+        while(scanner.hasNextLine()){
+            buffer.append(scanner.nextLine()) ;
+        }
+        scanner.close();
+        return buffer.toString();
     }
 }

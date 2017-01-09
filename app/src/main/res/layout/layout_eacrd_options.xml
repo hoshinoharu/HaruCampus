@@ -61,6 +61,7 @@
                 android:gravity="center_vertical"
                 android:id="@+id/container"
                 android:layout_marginLeft="40dp"
+                android:theme="@style/WhiteEdTxtTheme"
                 >
                 <include layout="@layout/ecard_option_compquery"/>
                 <include layout="@layout/ecard_option_account_manage" />

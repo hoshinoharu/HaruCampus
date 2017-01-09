@@ -7,6 +7,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.haru.tools.HLog;
+import com.haru.tools.Res;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +23,13 @@ import java.util.List;
 
 public class SqueezeboxGroup extends LinearLayout implements SqueezeboxListener{
 
+    public interface ItemOnClickListener{
+        void onItemTitleClick(View view, boolean showContent) ;
+        void onItemContentClick(View view) ;
+    }
     private List<SqueezeboxView> childs  ;
+
+    private ItemOnClickListener itemOnClickListener ;
 
     public SqueezeboxGroup(Context context) {
         super(context);
@@ -67,6 +79,7 @@ public class SqueezeboxGroup extends LinearLayout implements SqueezeboxListener{
                 }
                 index ++ ;
             }
+            this.setItemOnClickListener(this.itemOnClickListener);
         }
 
     }
@@ -85,4 +98,14 @@ public class SqueezeboxGroup extends LinearLayout implements SqueezeboxListener{
     public void onContentHide(SqueezeboxView child){
 
     }
+
+    public void setItemOnClickListener(ItemOnClickListener itemOnClickListener) {
+        this.itemOnClickListener = itemOnClickListener;
+        if(childs != null) {
+            for (SqueezeboxView squeezeboxView : childs) {
+                squeezeboxView.setItemOnClickListener(this.itemOnClickListener);
+            }
+        }
+    }
+
 }
