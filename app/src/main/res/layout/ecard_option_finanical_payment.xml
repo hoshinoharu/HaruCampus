@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.haru.widget.SqueezeboxView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/testSize_optionTitleInfo"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/testSize_optionContent"
+            android:text="@string/payment_item"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/testSize_optionContent"
+            android:text="@string/payment_record"
+            android:layout_margin="5dp"
+            />
+    </LinearLayout>
+    <com.haru.widget.StrokeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|left"
+        android:textSize="@dimen/testSize_optionTitleInfo"
+        android:text="@string/finanical_payment"
+        />
+</com.haru.widget.SqueezeboxView>

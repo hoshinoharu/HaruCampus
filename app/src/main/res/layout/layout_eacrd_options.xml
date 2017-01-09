@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:layout_margin="0dp"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <ImageView
+            android:id="@+id/imgVw_imgShow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dy_bg"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgVw_userPhoto"
+                android:layout_width="@dimen/user_photoSize"
+                android:layout_height="@dimen/user_photoSize"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/default_user_photo"
+                />
+
+            <com.haru.widget.StrokeTextView
+                android:id="@+id/txtVw_userName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/default_user_name"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/textSize_userName"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:letterSpacing="0.3"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.haru.widget.SqueezeboxGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/container"
+                android:layout_marginLeft="40dp"
+                >
+                <include layout="@layout/ecard_option_compquery"/>
+                <include layout="@layout/ecard_option_account_manage" />
+                <include layout="@layout/ecard_option_finanical_payment" />
+                <include layout="@layout/ecard_option_bank_transfer" />
+                <include layout="@layout/ecard_option_electricity_payment" />
+            </com.haru.widget.SqueezeboxGroup>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

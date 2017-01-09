@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,18 +20,17 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.haru.sora.harucampus.R;
+import com.haru.sora.harucampus.activities.ECardActivity;
+import com.haru.sora.harucampus.vo.User;
+import com.haru.sora.harucampus.vo.UserManager;
 import com.haru.tools.GlideTool;
 import com.haru.tools.HLog;
 import com.haru.tools.MathTool;
@@ -249,7 +247,8 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
                 OKHttpTool.sendOkHttpRequest(ownerActivy.getString(R.string.check_verify_code_url) + this.verifyCode, Headers.of("Cookie", cookies),  new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-
+                        Snackbar.make(mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+                        mrPhBtn_login.morphToFailure();
                     }
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
@@ -278,9 +277,12 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         this.checkVerifyCode();
     }
 
+    private String userName;
+    private String password;
+
     public void checkUser(){
-        String userName = this.edTxt_userName.getText().toString() ;
-        String password = this.edTxt_password.getText().toString() ;
+        userName = this.edTxt_userName.getText().toString();
+        password = this.edTxt_password.getText().toString();
         String loginUrl = getLoginUrl() ;
         if(loginUrl == null){
             this.loginModelError();
@@ -290,6 +292,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             @Override
             public void onFailure(Call call, IOException e) {
                 Snackbar.make(mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
+                mrPhBtn_login.morphToFailure();
             }
 
             @Override
@@ -325,6 +328,20 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
     private void checkUserSuccess(String html) {
         Snackbar.make(this.mainView, R.string.login_success, Snackbar.LENGTH_LONG).show();
         mrPhBtn_login.morphToSuccess();
+
+        //清楚用户信息
+        UserManager.cleanUserInfo();
+        //保存用户登录信息
+        User user = UserManager.getUser() ;//单例用户
+        user.setId(userName);
+        user.setPassword(password);
+        user.setLoginModel(loginModel);
+        user.setLoginUrl(loginUrl);
+        user.setCookies(cookies);
+
+
+        ECardActivity.start(this.ownerActivy);
+
     }
 
     public void checkUserFail(){
@@ -351,16 +368,22 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         }, 600);
     }
 
+    private String loginModel ;
+    private String loginUrl ;
+
     public String getLoginUrl(){
         switch (this.rdoGrp_loginMoedl.getCheckedRadioButtonId()){
             case R.id.rdoBtn_user:
-                return ownerActivy.getString(R.string.express_login_url);
+                this.loginModel = "express" ;
+                this.loginUrl = ownerActivy.getString(R.string.express_login_url) ;
             case R.id.rdoBtn_trade:
-                return ownerActivy.getString(R.string.trade_login_url);
+                this.loginModel = "trade" ;
+                this.loginUrl = ownerActivy.getString(R.string.trade_login_url) ;
             case R.id.rdoBtn_admin:
-                return ownerActivy.getString(R.string.manager_login_url) ;
+                this.loginModel = "manager" ;
+                this.loginUrl = ownerActivy.getString(R.string.manager_login_url) ;
         }
-        return null ;
+        return this.loginUrl;
     }
 
     @Override

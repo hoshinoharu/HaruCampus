@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transGray">#9fff</color>
+    <color name="border_text">#999</color>
 </resources>

@@ -24,4 +24,24 @@
     <string name="login_model_error">登录模式错误</string>
     <string name="login_resp_regex"><![CDATA[<TITLE>安徽电子信息职业技术学院一卡通WEB系统</TITLE>]]></string>
     <string name="login_success">登录成功</string>
+    <string name="default_user_name">学生</string>
+    <string name="ecard_option_title1">综合查询</string>
+    <string name="compquery">综合查询</string>
+    <string name="detailsquery">明细查询</string>
+    <string name="balance_query">校园卡余额查询</string>
+    <string name="userInfo_query">个人信息查询</string>
+    <string name="account_manage">账户管理</string>
+    <string name="report_lose">卡片挂失</string>
+    <string name="modify_pass">密码修改</string>
+    <string name="finanical_payment">财务缴费</string>
+    <string name="payment_record">缴费记录</string>
+    <string name="payment_item">缴费项目</string>
+    <string name="bank_transfer">银行圈存</string>
+    <string name="self_transfer">自助圈存</string>
+    <string name="query_bank_balance">查询银行余额</string>
+    <string name="electricity_payment">购电缴费</string>
+    <string name="electricity_pay">房屋购电</string>
+    <string name="electricity_query">房屋电量查询</string>
+    <string name="electricity_payment_details">用户购电明细</string>
+    <string name="query_userInfo_action">http://ecard.avceit.cn/queryUserInfo.action</string>
 </resources>

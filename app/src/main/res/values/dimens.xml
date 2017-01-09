@@ -14,4 +14,11 @@
     <dimen name="dp_200">200dp</dimen>
     <dimen name="dp_120">120dp</dimen>
     <dimen name="dp_60">60dp</dimen>
+    <dimen name="user_photoSize">50dp</dimen>
+    <dimen name="textSize_userName">25sp</dimen>
+    <dimen name="layout_height_ecard_option_height">40dp</dimen>
+    <dimen name="option_title_icon_size">40dp</dimen>
+
+    <dimen name="testSize_optionTitleInfo">20sp</dimen>
+    <dimen name="testSize_optionContent">15sp</dimen>
 </resources>
