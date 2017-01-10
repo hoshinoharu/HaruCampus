@@ -3,28 +3,26 @@ package com.haru.sora.harucampus.components.fragment;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.haru.sora.harucampus.R;
+import com.haru.sora.harucampus.activities.ECardActivity;
 import com.haru.sora.harucampus.service.UserService;
 import com.haru.sora.harucampus.vo.User;
 import com.haru.sora.harucampus.vo.UserManager;
-import com.haru.tools.HLog;
 import com.haru.tools.OKHttpTool;
 import com.haru.tools.Res;
 import com.haru.widget.SqueezeboxGroup;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,12 +39,15 @@ public class ECardOptionFragment extends HFragment implements SqueezeboxGroup.It
 
     private SqueezeboxGroup container;
 
+    private Activity ownerActivity ;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_eacrd_options, container);
         this.contentView = view;
+        this.ownerActivity = this.getActivity() ;
         this.container = (SqueezeboxGroup) this.findViewById(R.id.container);
         this.txtVw_queryUserInfo = (TextView) this.findViewById(R.id.txtVw_queryUserInfo);
         this.init();
@@ -154,20 +155,29 @@ public class ECardOptionFragment extends HFragment implements SqueezeboxGroup.It
 
     }
 
+    //查询用户信息
     public void queryUserInfo() {
-        User user = UserManager.getUser();
-        UserService service = UserService.getUserService();
+        final User user = UserManager.getUser();
+        final UserService service = UserService.getUserService();
         service.queryInfo(user, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Snackbar.make(txtVw_queryUserInfo, getString(R.string.server_fail), Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String html = OKHttpTool.getHtml(response.body().byteStream()) ;
-
+                service.fillInfoFromHtml(user, html);
+                if(ownerActivity instanceof ECardActivity){
+                    ECardActivity eCardActivity = (ECardActivity) ownerActivity;
+                    eCardActivity.showUserInfo(user);
+                }
             }
         });
+    }
+
+    public void queryEcardBalance(){
+
     }
 }

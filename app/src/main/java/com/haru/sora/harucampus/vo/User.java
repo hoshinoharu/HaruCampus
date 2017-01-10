@@ -1,6 +1,7 @@
 package com.haru.sora.harucampus.vo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 星野悠 on 2017/1/9.
@@ -18,6 +19,8 @@ public class User {
     private String cookies ;
 
     private List<UserInfo> userInfos ;
+
+    private Map<String, UserInfo> infoMap ;
 
     User(){
 
@@ -69,5 +72,17 @@ public class User {
 
     public void setUserInfos(List<UserInfo> userInfos) {
         this.userInfos = userInfos;
+    }
+
+    public Map<String, UserInfo> getInfoMap() {
+        return infoMap;
+    }
+
+    public void setInfoMap(Map<String, UserInfo> infoMap) {
+        this.infoMap = infoMap;
+    }
+
+    public UserInfo getInfoByName(String name){
+        return this.infoMap.get(name) ;
     }
 }
