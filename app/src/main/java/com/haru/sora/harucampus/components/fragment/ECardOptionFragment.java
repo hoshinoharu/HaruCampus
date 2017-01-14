@@ -17,7 +17,10 @@ import com.haru.sora.harucampus.R;
 import com.haru.sora.harucampus.activities.ECardActivity;
 import com.haru.sora.harucampus.service.UserService;
 import com.haru.sora.harucampus.vo.User;
+import com.haru.sora.harucampus.vo.UserInfo;
 import com.haru.sora.harucampus.vo.UserManager;
+import com.haru.tools.Constant;
+import com.haru.tools.HLog;
 import com.haru.tools.OKHttpTool;
 import com.haru.tools.Res;
 import com.haru.widget.SqueezeboxGroup;
@@ -158,23 +161,29 @@ public class ECardOptionFragment extends HFragment implements SqueezeboxGroup.It
     //查询用户信息
     public void queryUserInfo() {
         final User user = UserManager.getUser();
-        final UserService service = UserService.getUserService();
-        service.queryInfo(user, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Snackbar.make(txtVw_queryUserInfo, getString(R.string.server_fail), Snackbar.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String html = OKHttpTool.getHtml(response.body().byteStream()) ;
-                service.fillInfoFromHtml(user, html);
-                if(ownerActivity instanceof ECardActivity){
-                    ECardActivity eCardActivity = (ECardActivity) ownerActivity;
-                    eCardActivity.showUserInfo(user);
-                }
-            }
-        });
+        if(ownerActivity instanceof ECardActivity){
+            ECardActivity eCardActivity = (ECardActivity) ownerActivity;
+            eCardActivity.showUserInfo(user);
+        }
+//        final UserService service = UserService.getUserService();
+//        service.queryInfo(user, new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Snackbar.make(txtVw_queryUserInfo, getString(R.string.server_fail), Snackbar.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                String json = OKHttpTool.getHtml(response.body().byteStream()) ;
+//                UserInfo userInfo = Constant.GSON.fromJson(json, UserInfo.class) ;
+//                user.setUserInfo(userInfo);
+//                if(ownerActivity instanceof ECardActivity){
+//                    ECardActivity eCardActivity = (ECardActivity) ownerActivity;
+//                    eCardActivity.showUserInfo(user);
+//                }
+//            }
+//        });
     }
 
     public void queryEcardBalance(){

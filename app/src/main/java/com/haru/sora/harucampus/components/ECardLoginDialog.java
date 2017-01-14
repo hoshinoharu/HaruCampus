@@ -116,7 +116,6 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
     }
 
     private void init(){
-        this.queryCookies();
         this.error = new BitmapDrawable(BitmapFactory.decodeResource(this.ownerActivy.getResources(), R.drawable.frame_error)) ;
         this.mainView = LayoutInflater.from(this.getContext()).inflate(R.layout.layout_ecard_login, null) ;
         this.setView(this.mainView);
@@ -162,7 +161,6 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 curCheckedBtn = (RadioButton) radioGroup.getChildAt(i);
-                rdoGrp_loginMoedl.setBackgroundColor(Res.color(ownerActivy, android.R.color.transparent));
                 mrPhBtn_login.morphToSquare();
             }
         });
@@ -177,6 +175,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         this.curCheckedBtn = rdoBtn_user ;
 
         this.setOnShowListener(this);
+        this.queryCookies();
 
     }
 
@@ -210,7 +209,6 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             @Override
             public void onFailure(Call call, IOException e) {
                 Snackbar.make(mainView, R.string.server_fail, Snackbar.LENGTH_SHORT).show();
-                HLog.ex("TAG", e);
                 loginAnimeHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -288,6 +286,8 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             this.loginModelError();
             return ;
         }
+        HLog.e("TAG", cookies);
+        HLog.e("TAG", loginUrl+"&username="+userName+"&password="+password+"&checkCode="+verifyCode);
         OKHttpTool.sendOkHttpRequest(loginUrl+"&username="+userName+"&password="+password+"&checkCode="+verifyCode, Headers.of("Cookie", cookies), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -304,6 +304,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
                     offset = 750 ;
                 }
                 offset = 750 - offset ;
+            //    HLog.e("TAG", html);
                 if(Pattern.compile(ownerActivy.getString(R.string.login_resp_regex)).matcher(html).find()){
                     //登录成功
                     loginAnimeHandler.postDelayed(new Runnable() {
@@ -329,7 +330,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         Snackbar.make(this.mainView, R.string.login_success, Snackbar.LENGTH_LONG).show();
         mrPhBtn_login.morphToSuccess();
 
-        //清楚用户信息
+        //清除用户信息
         UserManager.cleanUserInfo();
         //保存用户登录信息
         User user = UserManager.getUser() ;//单例用户
@@ -338,10 +339,7 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
         user.setLoginModel(loginModel);
         user.setLoginUrl(loginUrl);
         user.setCookies(cookies);
-
-
         ECardActivity.start(this.ownerActivy);
-
     }
 
     public void checkUserFail(){
@@ -376,12 +374,15 @@ public class ECardLoginDialog extends AlertDialog implements View.OnClickListene
             case R.id.rdoBtn_user:
                 this.loginModel = "express" ;
                 this.loginUrl = ownerActivy.getString(R.string.express_login_url) ;
+                break ;
             case R.id.rdoBtn_trade:
                 this.loginModel = "trade" ;
                 this.loginUrl = ownerActivy.getString(R.string.trade_login_url) ;
+                break ;
             case R.id.rdoBtn_admin:
                 this.loginModel = "manager" ;
                 this.loginUrl = ownerActivy.getString(R.string.manager_login_url) ;
+                break ;
         }
         return this.loginUrl;
     }

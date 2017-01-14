@@ -43,5 +43,5 @@
     <string name="electricity_pay">房屋购电</string>
     <string name="electricity_query">房屋电量查询</string>
     <string name="electricity_payment_details">用户购电明细</string>
-    <string name="query_userInfo_action">http://ecard.avceit.cn/queryUserInfo.action</string>
+    <string name="query_userInfo_action">http://192.168.1.161:8080/AvceitHaru/AvceitChanger?action=queryUserInfo</string>
 </resources>

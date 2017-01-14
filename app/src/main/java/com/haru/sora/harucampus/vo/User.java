@@ -18,9 +18,7 @@ public class User {
 
     private String cookies ;
 
-    private List<UserInfo> userInfos ;
-
-    private Map<String, UserInfo> infoMap ;
+    private UserInfo userInfo ;
 
     User(){
 
@@ -66,23 +64,11 @@ public class User {
         this.password = password;
     }
 
-    public List<UserInfo> getUserInfos() {
-        return userInfos;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setUserInfos(List<UserInfo> userInfos) {
-        this.userInfos = userInfos;
-    }
-
-    public Map<String, UserInfo> getInfoMap() {
-        return infoMap;
-    }
-
-    public void setInfoMap(Map<String, UserInfo> infoMap) {
-        this.infoMap = infoMap;
-    }
-
-    public UserInfo getInfoByName(String name){
-        return this.infoMap.get(name) ;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

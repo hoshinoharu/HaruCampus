@@ -7,15 +7,15 @@
     <android.support.v4.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/frag_ecardContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
+            <fragment
+                android:name="com.haru.sora.harucampus.components.fragment.ECardHomePageFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="HelloWorld"
-                />
-        </LinearLayout>
+                android:layout_height="match_parent"/>
+        </FrameLayout>
         <fragment
             android:id="@+id/frag_ecardOption"
             android:name="com.haru.sora.harucampus.components.fragment.ECardOptionFragment"

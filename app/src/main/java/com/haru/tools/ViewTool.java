@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.haru.sora.harucampus.HaruBase;
+
 /**
  * Created by 星野悠 on 2017/1/4.
  */
@@ -36,6 +38,10 @@ public class ViewTool {
     }
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+    public static int dip2px(float dpValue) {
+        final float scale = HaruBase.context().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 

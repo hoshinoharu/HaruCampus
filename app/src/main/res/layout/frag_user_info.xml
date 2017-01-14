@@ -1,72 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.haru.widget.HCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <com.haru.widget.HAppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="200dp"
+        android:orientation="vertical">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            >
+            android:scaleType="centerCrop"
+            android:src="@drawable/dy_bg"
+            app:layout_collapseMode="parallax" />\
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                android:src="@drawable/dy_bg"
-                />
-            <android.support.v7.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                >
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
+            android:layout_height="?attr/actionBarSize"
+            android:text="标题" />
+    </com.haru.widget.HAppBarLayout>
+
+    <com.haru.widget.HScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="test"
-            />
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="tes4t" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test6" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test7" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="test8" />
+        </LinearLayout>
+    </com.haru.widget.HScrollView>
+</com.haru.widget.HCoordinatorLayout>
